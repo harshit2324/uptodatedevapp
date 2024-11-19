@@ -2,8 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { auth, signIn, signOut } from '@/auth'
-import { sign } from 'crypto'
-import { redirect } from 'next/dist/server/api-utils'
+
 const Navbar = async () => {
   const session = await auth()
   return (
