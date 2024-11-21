@@ -1,23 +1,25 @@
-import Image from "next/image";
+
 import SearchForm from "../../components/SearchForm";
-import NewsList from "../../components/NewsList"
+import NewsList, { startuptypecard } from "../../components/NewsList"
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { STARTUPS_QUERY } from "@/sanity/lib/quaries";
+
 
 export default async function Home({searchParams}: {
   searchParams: Promise<{ query?: string}>  
  
 }) {
-  const query = (await searchParams).query; 
-   
-   const post = [{
-    _createdAt: Date.now(),
-    views: 55,
-    author: {_id: 1, name: "harhsit"},
-    _id: 1,
-    description: "This is a description",
-    image: "https://th.bing.com/th/id/OIP.NztfNu6p_efe7yI8BXI4iAHaEK?rs=1&pid=ImgDetMain",
-    cetegory: "Robot",
-    tittle: "we robots",
-   }]
+  const query = (await searchParams).query;
+  const params = { search: query || null };
+
+  //const session = await auth();
+
+ // console.log(session?.id);
+
+  const { data: post } = await sanityFetch({ query: STARTUPS_QUERY, params });
+
+  console.log(query)
+
   return (
     <>
     <section className="pink_container">
@@ -40,8 +42,8 @@ export default async function Home({searchParams}: {
           )}
             
         </ul>
-
-    </section>
+ </section>
+ <SanityLive />
 
   </>
   );
