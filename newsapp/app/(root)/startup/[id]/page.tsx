@@ -1,13 +1,12 @@
 import { client } from '@/sanity/lib/client';
-import React from 'react'
+import React, { Suspense } from 'react'
 import { STARTUP_BY_ID_QUERY } from '@/sanity/lib/quaries';
-import { format } from 'path';
 import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
-import { auth } from '@/auth';
-import { author } from '@/sanity/schemaTypes/author';
 import { notFound } from 'next/navigation';
+import { Skeleton } from '@/components/ui/skeleton';
+import View from '@/components/View';
 export const experimental_ppr = true;
 
 const page = async ({params}: {params: Promise<{ id: string}>} ) => {
@@ -40,8 +39,15 @@ const page = async ({params}: {params: Promise<{ id: string}>} ) => {
     <p className='category-tag'>{post.category}</p>
     </div>
     <h3 className='text-30-bold'>news details</h3>
+    <hr className='divider' />
+
+    <Suspense fallback={<Skeleton className='view_skeleton' />} > 
+    <View id={id} />
+    </Suspense>
    </div>
     </section>
+
+    
 
     </>
   )
